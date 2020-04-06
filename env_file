@@ -1,0 +1,5 @@
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres_password
+POSTGRES_DB=flaskapp_db
+APP_SECRET_KEY=app_key
+APP_NAME=MyFlaskApp

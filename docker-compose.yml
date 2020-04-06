@@ -1,0 +1,33 @@
+version: "3.7"
+
+services:
+    flask:
+        build: ./flask
+        container_name: flask
+        restart: always
+        env_file:
+            - env_file
+        volumes:
+            - ./flask:/opt/services/flask/src
+        networks:
+            - db_network
+            - web_network
+        expose:
+            - 8080
+    nginx:
+        build: ./nginx
+        container_name: nginx
+        restart: always
+        ports:
+            - "80:80"
+        networks:
+            - web_network
+        depends_on:
+            - flask
+networks:
+    db_network:
+        driver: bridge
+    web_network:
+        driver: bridge
+volumes:
+    dbdata:
