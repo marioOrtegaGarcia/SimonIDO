@@ -1,6 +1,14 @@
 version: "3.7"
 
 services:
+    db:
+        build: ./postgres
+        volumes:
+            - "dbdata:/var/lib/postgresql/data"
+        env_file:
+            - env_file
+        networks:
+            - db_network
     flask:
         build: ./flask
         container_name: flask

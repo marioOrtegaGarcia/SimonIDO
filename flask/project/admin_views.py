@@ -1,4 +1,5 @@
-from app import app
+from project import app
+
 from flask import render_template, redirect, url_for
 
 @app.route("/admin/dashboard")

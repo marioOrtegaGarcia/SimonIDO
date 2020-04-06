@@ -1,10 +1,5 @@
 # Pulling python image
 FROM python:3.7.2-stretch
-# Setting working directory to /app
-#WORKDIR /app
-# Copying everything from current dir over to the container's /app folder
-#ADD . /app
-
 
 # Merging Dockerfiles
 ENV PYTHONUNBUFFERED 1
@@ -18,6 +13,7 @@ RUN pip install -r requirements.txt
 
 #COPY . /opt/services/flask/src
 EXPOSE 8080
+
 # Running uWSGI
 CMD ["uwsgi", "app.ini"]
 

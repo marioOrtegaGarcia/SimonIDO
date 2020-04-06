@@ -2,7 +2,7 @@
     views.py
         - Views is used to mange all of our app routes
 """
-from app import app
+from project import app
 
 from flask import render_template
 @app.route("/")
