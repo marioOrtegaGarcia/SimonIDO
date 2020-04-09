@@ -1,0 +1,37 @@
+{% extends "public/base.html" %}
+{% include "public/userNavigationBar.html" %}
+
+{% block title %} {{user}}'s Home Page{% endblock %}
+
+{% block content %}
+<h1>Hello {{user}}! Simon Says You should</h1>
+
+
+
+<div class="container">
+    <table class="table table-hover table-dark">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Description</th>
+                <th scope="col">Assigned to</th>
+                <th scope="col">Assigned date</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <th scope="row">Math</th>
+                <th scope="row">Struggle</th>
+                <th scope="row">Mario</th>
+                <th scope="row">Yesterday</th>
+                <th scope="row">Not Done</t>
+            </tr>
+        </tbody>
+    </table>
+</container>
+
+
+{% endblock %}

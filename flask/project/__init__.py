@@ -5,7 +5,8 @@
 """
 import os
 from flask import Flask
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, event, DDL
+from sqlalchemy.schema import CreateSchema
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -23,17 +24,21 @@ port = '5432'
 engine = create_engine('postgres://%s:%s@%s:%s/%s' % (user, pwd, host, port, database), echo=True)
 
 db_session = scoped_session(sessionmaker(autocommit=False,
-                                        autoflush=False,
-                                        bind=engine))
+    autoflush=False,
+    bind=engine))
 
 db = declarative_base()
 db.query = db_session.query_property
 
+
 def create_tables():
     # TODO: import modules that define models for cleaner code
     import project.models
-    print("Creating Schema")
+    print("~~~Creating Schemas and tables if not made~~~")
+    event.listen(db.metadata, 'before_create', DDL("CREATE SCHEMA IF NOT EXISTS private"))
+    event.listen(db.metadata, 'before_create', DDL("CREATE SCHEMA IF NOT EXISTS public"))
     db.metadata.create_all(engine)
 
+create_tables()
 from project import views
 from project import admin_views

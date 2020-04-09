@@ -1,0 +1,44 @@
+{% extends "public/base.html" %}
+
+{% block link %} <link rel="stylesheet" href="{{url_for('static', filename='css/login_style.css')}}"> {% endblock %}
+
+{% block title %} Sign-Up Page {% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row no-gutter">
+        <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+        <div class="col-md-8 col-lg-6">
+            <div class="login d-flex align-items-center py-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9 col-lg-8 mx-auto">
+                            <h3 class="login-heading mb-4">Welcome back!</h3>
+
+                            <form action="/sign-up" method="POST">
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Select a username">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Create a password">
+                                </div>
+                                <button class="btn btn-lg btn-primary btn-block text-uppercase font-weight-bold mb-2" type="submit">Sign in</button>                                <div class="text-center">
+                                    <a class="small" href="#">Forgot password?</a></div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

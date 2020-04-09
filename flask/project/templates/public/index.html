@@ -1,5 +1,10 @@
 {% extends "public/base.html" %}
-{% block title %} Home Page{% endblock %}
+{% include "public/userNavigationBar.html" %}
+
+{% block title %} Index Page{% endblock %}
+
 {% block content %}
-<h1> Test </h1>
+<h1>Welcome to SimonIDO <span class="badge badge-secondary">New Site</span></h1>
+<b> Simon will be your virtual assistand and remind you to get stuff done<b>
+
 {% endblock %}

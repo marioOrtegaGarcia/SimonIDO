@@ -5,6 +5,7 @@ from sqlalchemy.types import DateTime
 # Tasks table
 class Tasks(db):
     __tablename__ = 'tasks'
+    __table_args__ = { 'schema':'private' }
     id = Column(Integer, primary_key=True)
     subject = Column(String(256))
     description = Column(String(1024))
