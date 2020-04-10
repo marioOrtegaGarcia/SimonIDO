@@ -5,6 +5,8 @@
 """
 import os
 from flask import Flask
+from flask_bootstrap import Bootstrap
+
 from sqlalchemy import create_engine, event, DDL
 from sqlalchemy.schema import CreateSchema
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -12,6 +14,10 @@ from sqlalchemy.ext.declarative import declarative_base
 
 app = Flask(__name__)
 app.secret_key = os.environ['APP_SECRET_KEY']
+bs = Bootstrap(app)
+
+
+
 
 # Same environment variables used inside PostGres db
 user = os.environ['POSTGRES_USER']
@@ -27,17 +33,17 @@ db_session = scoped_session(sessionmaker(autocommit=False,
     autoflush=False,
     bind=engine))
 
-db = declarative_base()
-db.query = db_session.query_property
+Base = declarative_base()
+Base.query = db_session.query_property
 
 
 def create_tables():
     # TODO: import modules that define models for cleaner code
     import project.models
     print("~~~Creating Schemas and tables if not made~~~")
-    event.listen(db.metadata, 'before_create', DDL("CREATE SCHEMA IF NOT EXISTS private"))
-    event.listen(db.metadata, 'before_create', DDL("CREATE SCHEMA IF NOT EXISTS public"))
-    db.metadata.create_all(engine)
+    event.listen(Base.metadata, 'before_create', DDL("CREATE SCHEMA IF NOT EXISTS private"))
+    event.listen(Base.metadata, 'before_create', DDL("CREATE SCHEMA IF NOT EXISTS public"))
+    Base.metadata.create_all(engine)
 
 create_tables()
 from project import views

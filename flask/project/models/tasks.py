@@ -1,9 +1,9 @@
-from project import db
+from project import Base
 from sqlalchemy import Column, Integer, Boolean, String
 from sqlalchemy.types import DateTime
 
 # Tasks table
-class Tasks(db):
+class Tasks(Base):
     __tablename__ = 'tasks'
     __table_args__ = { 'schema':'private' }
     id = Column(Integer, primary_key=True)

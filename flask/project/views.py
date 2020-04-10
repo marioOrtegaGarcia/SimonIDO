@@ -7,10 +7,12 @@ import datetime
 import hashlib as hash
 
 from flask import render_template, redirect, url_for, request
+from sqlalchemy.orm import sessionmaker
 from project import app
 from project import db_session
 from project.models.tasks import Tasks
 from project.forms.formsTask import TaskForm
+
 
 @app.route("/")
 def index():
@@ -50,8 +52,9 @@ def create_task():
                 assigned_to = form.status.data,
                 data_created = datetime.datetime.now()
                 )
-        #db_session.add(task)
-        #db_session.commit()
+        print(task)
+        db_session.session_factory.add(task)
+        db_session.session_factory.commit()
         return redirect(url_for('success'))
     return render_template('public/createTask.html', form=form)
 
