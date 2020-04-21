@@ -17,8 +17,6 @@ app.secret_key = os.environ['APP_SECRET_KEY']
 bs = Bootstrap(app)
 
 
-
-
 # Same environment variables used inside PostGres db
 user = os.environ['POSTGRES_USER']
 pwd = os.environ['POSTGRES_PASSWORD']
@@ -39,7 +37,9 @@ Base.query = db_session.query_property
 
 def create_tables():
     # TODO: import modules that define models for cleaner code
-    import project.models
+    import project.models.Tasks
+    import project.models.Users
+
     print("~~~Creating Schemas and tables if not made~~~")
     event.listen(Base.metadata, 'before_create', DDL("CREATE SCHEMA IF NOT EXISTS private"))
     event.listen(Base.metadata, 'before_create', DDL("CREATE SCHEMA IF NOT EXISTS public"))

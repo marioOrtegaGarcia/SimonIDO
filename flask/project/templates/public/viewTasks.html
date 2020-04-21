@@ -1,8 +1,55 @@
 {% extends "public/base.html" %}
 {% include "public/userNavigationBar.html" %}
 
-{% block title %}Create Task{% endblock %}
+{% block title %}View Task{% endblock %}
 {% block content %}
 
+<div class="container">
 
-    {% endblock %}
+  <div class="row">
+
+    <div class="col md-12">
+      <div class="jubmbotron p-3">
+
+        <!-- TODO: Manage task Creation and Editing through a Modal -->
+        <h1>Create Tasks
+          <button class="btn btn-primary float-right" data-toggle="modal" data-target="#mymodal">Add New Task</button>
+        </h1>
+
+        <table class="table table-hover table-borderless">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Subject</th>
+              <th scope="col">Description</th>
+              <th scope="col">Assigned to</th>
+              <th scope="col">Status</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for task in tasks %}
+            <tr>
+              <th scope="row">{{ task.id }}</th>
+              <th scope="row">{{ task.subject }}</th>
+              <th scope="row">{{ task.description }}</th>
+              <th scope="row">{{ task.assigned_to }}</th>
+              <th scope="row">{{ task.status }}</th>
+              <td>
+                <a href="" class="btn btn-light btn-xs" data-toggle="mdoal" data-toggle="#modaledit">Edit</a>
+                <a href="" class="btn btn-danger btn-xs" onclick="return confirm('Simon asks if you want to delete task: {{ task.subject }}?')">Delete</a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+{% endblock %}

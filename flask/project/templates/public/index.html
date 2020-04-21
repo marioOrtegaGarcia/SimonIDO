@@ -1,10 +1,115 @@
 {% extends "public/base.html" %}
 {% include "public/userNavigationBar.html" %}
 
+{% block link %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/landing.css')}}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+{% endblock %}
+
 {% block title %} Index Page{% endblock %}
 
+
+
 {% block content %}
-<h1>Welcome to SimonIDO <span class="badge badge-secondary">New Site</span></h1>
-<b> Simon will be your virtual assistand and remind you to get stuff done<b>
+<!-- Sign Up with image header -->
+<div class="mastdiv text-white text-center">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-9 mx-auto">
+        <h1 class="welcome mb-5">Welcome to SimonIDO <span class="badge badge-secondary">Sign Up!</span></h1>
+      </div>
+      <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+        <form>
+          <div class="form-row">
+            <div class="col-12 col-md-9 mb-2 mb-md-0">
+              <input type="email" class="form-control form-control-lg" placeholder="Enter your email...">
+            </div>
+            <div class="col-12 col-md-3">
+              <a type="submit" href="{{url_for('signup')}}" class="btn btn-block btn-lg btn-primary">Sign up!</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Information Icons -->
+<section class="features-icons bg-light text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+          <div class="features-icons-icon">
+            <i class="far fa-bell"></i>
+          </div>
+          <h3>On Task</h3>
+          <p class="lead mb-0">Simon will keep up up to date with your assignments.</p>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+          <div class="features-icons-icon">
+            <i class="fas fa-link"></i>
+          </div>
+          <h3>Connection</h3>
+          <p class="lead mb-0">Develop a direct connection with Simon.</p>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+          <div class="features-icons-icon">
+            <i class="fab fa-simplybuilt"></i>
+          </div>
+          <h3>Easy to Use</h3>
+          <p class="lead mb-0">Tell Simon what needs to be accomplished.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+        <ul class="list-inline mb-2">
+          <li class="list-inline-item">
+            <a href="#"><strike>About</strike></a>
+          </li>
+          <li class="list-inline-item">&sdot;</li>
+          <li class="list-inline-item">
+            <a href="#"><strike>Contact</strike></a>
+          </li>
+          <li class="list-inline-item">&sdot;</li>
+          <li class="list-inline-item">
+            <a href="#"><strike>Terms of Use</strike></a>
+          </li>
+          <li class="list-inline-item">&sdot;</li>
+          <li class="list-inline-item">
+            <a href="#"><strike>Privacy Policy</strike></a>
+          </li>
+        </ul>
+        <p class="text-muted small mb-4 mb-lg-0">&copy; SimonIDKO 2019. All Rights Reserved.</p>
+      </div>
+      <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
+        <ul class="list-inline mb-0">
+          <li class="list-inline-item mr-3">
+            <a href="https://www.instagram.com/mar10codes/">
+              <i class="fab fa-instagram fa-2x fa-fw"></i>
+            </a>
+          </li>
+          <li class="list-inline-item">
+            <a href="https://www.linkedin.com/in/marioortegagarcia/">
+              <i class="fab fa-linkedin fa-2x fa-fw"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
 
 {% endblock %}
