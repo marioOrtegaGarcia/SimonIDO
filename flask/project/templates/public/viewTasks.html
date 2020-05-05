@@ -1,5 +1,6 @@
 {% extends "public/base.html" %}
 {% include "public/userNavigationBar.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}View Task{% endblock %}
 {% block content %}
@@ -7,14 +8,27 @@
 <div class="container">
 
   <div class="row">
-
     <div class="col md-12">
+
       <div class="jubmbotron p-3">
 
-        <!-- TODO: Manage task Creation and Editing through a Modal -->
         <h1>Create Tasks
-          <button class="btn btn-primary float-right" data-toggle="modal" data-target="#mymodal">Add New Task</button>
+          <a class="btn btn-primary float-right" data-toggle="modal" data-target="#mymodal">Add New Task</a>
         </h1>
+
+        <!-- Getting all of Flashed messages -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissable" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="close">
+            <span aria-hidden="true">x</span>
+          </button>
+          {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
 
         <table class="table table-hover table-borderless">
           <thead class="thead-dark">
@@ -36,20 +50,81 @@
               <th scope="row">{{ task.assigned_to }}</th>
               <th scope="row">{{ task.status }}</th>
               <td>
-                <a href="" class="btn btn-light btn-xs" data-toggle="mdoal" data-toggle="#modaledit">Edit</a>
-                <a href="" class="btn btn-danger btn-xs" onclick="return confirm('Simon asks if you want to delete task: {{ task.subject }}?')">Delete</a>
+                <a href="/update/{{task.id}}" class="btn btn-light btn-xs" data-toggle="modal" data-target="#modaledit{{task.id}}">Edit</a>
+                <a href="/delete/{{task.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Simon asks if you want to delete task: {{ task.subject }}?')">Delete</a>
               </td>
             </tr>
+
+            <!-- Modal Edit Task Data -->
+            <div id="modaledit{{task.id}}" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title"> Update Task </h4>
+                  </div>
+                  <div class="modal-body">
+
+                    <form action="{{url_for('update')}}" method="POST" class="form" role="form">
+                      {{ form.csrf_token() }}
+                      <!-- {{ wtf.form_field(form.id, value=task.id) }} -->
+                      <d1>
+                        <input type="hidden" name="id" value="{{task.id}}">
+                        {{ wtf.form_field(form.subject, value=task.subject) }}
+                        {{ wtf.form_field(form.description, value=task.description) }}
+                        {{ wtf.form_field(form.status, value=task.status) }}
+                        {{ wtf.form_field(form.assigned_to, value=task.assigned_to) }}
+                      </d1>
+                      <button class="btn btn-primary" type="submit">Update</button>
+                    </form>
+
+                  </div> <!-- modal-body -->
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+
+                </div> <!-- modal-content -->
+              </div> <!-- modal-dialog -->
+            </div> <!-- Modal Edit Task Data -->
             {% endfor %}
           </tbody>
         </table>
+      </div> <!-- jubmbotron p-3 -->
 
-      </div>
+      <!-- Modal Add Task -->
+      <div id="mymodal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Add Task</h4>
+            </div> <!-- modal-header -->
 
-    </div>
+            <!-- Task Form -->
+            <div class="modal-body">
+              <form action="{{url_for('insert')}}" method="POST" class="form" role="form">
+                {{ form.csrf_token() }}
+                <d1>
+                  {{ wtf.form_field(form.subject, placeholder='Subject') }}
+                  {{ wtf.form_field(form.description, placeholder='Description') }}
+                  {{ wtf.form_field(form.status, placeholder='Status') }}
+                  {{ wtf.form_field(form.assigned_to, placeholder='Owner') }}
+                </d1>
+                <p><input type=submit class="btn btn-primary mb-2"></p>
+              </form>
+            </div> <!-- Task Form - modal-body -->
 
-  </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
 
-</div>
+          </div> <!-- modal-content -->
+        </div> <!-- modal-dialog -->
+      </div> <!-- Modal Add Task -->
+
+    </div> <!-- col md-12 -->
+
+  </div> <!-- Row -->
+
+</div> <!-- Container -->
 
 {% endblock %}
