@@ -29,27 +29,21 @@ def home():
 
 @app.route("/sign-up", methods=["POST", "GET"])
 def signup():
-    # TODO: Use BCrypt to safely store passwords
+    # TODO: Use B Crypt to safely store passwords
     form = UserForm(request.form)
     if not form.validate_on_submit():
         return render_template('public/sign_up.html', form=form)
     if request.method == "POST":
         user = Users(
-            username = form.username.data,
-            email = form.email.data,
-            password = form.password.data,
-            date_joined = datetime.datetime.now()
-        )
+                username = form.username.data,
+                email = form.email.data,
+                password = form.password.data,
+                date_joined = datetime.datetime.now()
+                )
         username = form.username.data
         print(user)
         db_session.add(user)
         db_session.commit()
-        #username = request.form["username"]
-        #email = request.form["email"]
-        #password = request.form["password"]
-        #hp = hash.md5(password.encode())
-        #print("User: ", username, " signed up with email: ", email,
-        #      " with password: ", password, "hashed password: ", hp.hexdigest())
         return redirect(url_for('home', user=username))
     else:
         return render_template("public/sign_up.html")
@@ -87,12 +81,12 @@ def insert():
     form = TaskForm(request.form)
     if request.method == 'POST':
         task = Tasks(
-            subject = form.subject.data,
-            description = form.description.data,
-            assigned_to = form.assigned_to.data,
-            status = form.status.data,
-            date_created = datetime.datetime.now()
-            )
+                subject = form.subject.data,
+                description = form.description.data,
+                assigned_to = form.assigned_to.data,
+                status = form.status.data,
+                date_created = datetime.datetime.now()
+                )
         print(task)
         db_session.add(task)
         db_session.commit()
@@ -116,12 +110,12 @@ def createTask():
         return render_template('public/createTask.html', form=form)
     if request.method == 'POST':
         task = Tasks(
-            subject = form.subject.data,
-            description = form.description.data,
-            assigned_to = form.assigned_to.data,
-            status = form.status.data,
-            date_created = datetime.datetime.now()
-            )
+                subject = form.subject.data,
+                description = form.description.data,
+                assigned_to = form.assigned_to.data,
+                status = form.status.data,
+                date_created = datetime.datetime.now()
+                )
         print(task)
         db_session.add(task)
         db_session.commit()
