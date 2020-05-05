@@ -4,4 +4,4 @@ env/
 *.DS_Store
 *.swp
 *.pyc
-Untitled.py
+flask/project/templates/public/Untitled.html
