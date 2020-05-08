@@ -7,10 +7,10 @@ from project.models.List import List
 
 # Form ORM
 class TaskForm(FlaskForm):
-        id = HiddenField('id')
-        subject = StringField('Subject', validators=[DataRequired()])
-        description = StringField('Description', validators=[DataRequired()])
-        status = BooleanField('Completed', default=False)
-        assigned_to = StringField('Assign to', validators=[DataRequired()])
-        list = QuerySelectField(query_factory=lambda: db_session.query(List).all())
-        submit = SubmitField('Submit')
+    id = HiddenField('id')
+    subject = StringField('Subject', validators=[DataRequired()])
+    description = StringField('Description', validators=[DataRequired()])
+    status = BooleanField('Completed', default=False)
+    assigned_to = StringField('Assign to', validators=[DataRequired()])
+    list = QuerySelectField(query_factory=lambda: db_session.query(List).all())
+    submit = SubmitField('Submit')

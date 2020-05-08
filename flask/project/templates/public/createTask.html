@@ -4,21 +4,21 @@
 
 {% block content %}
 
-<div class="container">
-  <h3>Please answer this very important essay</h3>
-  <p>If you don't it'll go on your permanent record!.</p>
+	<div class="container">
+		<h3>Please answer this very important essay</h3>
+		<p>If you don't it'll go on your permanent record!.</p>
 
-  <hr>
-  <form action="" method="post" class="form" role="form">
-    {{ form.csrf_token() }}
-    <d1>
-      {{ wtf.form_field(form.subject, placeholder='Subject') }}
-      {{ wtf.form_field(form.description, placeholder='Description') }}
-      {{ wtf.form_field(form.status, placeholder='Status') }}
-      {{ wtf.form_field(form.assigned_to, placeholder='Owner') }}
-    </d1>
-    <p><input type=submit class="btn btn-primary mb-2"></p>
-  </form>
-  </hr>
-</div>
+		<hr>
+		<form action="" method="post" class="form" role="form">
+			{{ form.csrf_token() }}
+			<d1>
+			{{ wtf.form_field(form.subject, placeholder='Subject') }}
+			{{ wtf.form_field(form.description, placeholder='Description') }}
+			{{ wtf.form_field(form.status, placeholder='Status') }}
+			{{ wtf.form_field(form.assigned_to, placeholder='Owner') }}
+			</d1>
+			<p><input type=submit class="btn btn-primary mb-2"></p>
+		</form>
+		</hr>
+	</div>
 {% endblock %}

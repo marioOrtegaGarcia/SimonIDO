@@ -1,42 +1,42 @@
 div.mastdiv {
-    position: relative;
-    background-color: #343a40;
-    background: url('../img/landing-background.jpeg') no-repeat center center;
-    background-size: cover;
-    padding-top: 8rem;
-    padding-bottom: 8rem;
+	position: relative;
+	background-color: #343a40;
+	background: url('../img/landing-background.jpeg') no-repeat center center;
+	background-size: cover;
+	padding-top: 8rem;
+	padding-bottom: 8rem;
 }
 
 div.mastdiv .overlay {
-  position: absolute;
-  background-color: #212529;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  opacity: 0.3;
+	position: absolute;
+	background-color: #212529;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	opacity: 0.3;
 }
 
 .features-icons {
-  padding-top: 7rem;
-  padding-bottom: 7rem;
+	padding-top: 7rem;
+	padding-bottom: 7rem;
 }
 
 .features-icons .features-icons-item {
-  max-width: 20rem;
+	max-width: 20rem;
 }
 .features-icons .features-icons-item .features-icons-icon {
-  height: 7rem;
+	height: 7rem;
 }
 .features-icons .features-icons-item .features-icons-icon i {
-  font-size: 4.5rem;
+	font-size: 4.5rem;
 }
 .features-icons .features-icons-item:hover .features-icons-icon i {
-  font-size: 5rem;
+	font-size: 5rem;
 }
 
 
 footer.footer {
-  padding-top: 4rem;
-  padding-bottom: 4rem;
+	padding-top: 4rem;
+	padding-bottom: 4rem;
 }
