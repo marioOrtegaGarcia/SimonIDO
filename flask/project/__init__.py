@@ -13,9 +13,9 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 app = Flask(__name__)
-app.debug = True
 from werkzeug.debug import DebuggedApplication
 app.wsgi_app = DebuggedApplication(app.wsgi_app, True)
+app.debug = True
 
 app.secret_key = os.environ['APP_SECRET_KEY']
 bs = Bootstrap(app)
