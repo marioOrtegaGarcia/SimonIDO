@@ -40,8 +40,9 @@ Base.query = db_session.query_property
 
 def create_tables():
     # TODO: import modules that define models for cleaner code
-    import project.models.Tasks
-    import project.models.Users
+    import project.models.User
+    import project.models.List
+    import project.models.Task
 
     print("~~~Creating Schemas and tables if not made~~~")
     event.listen(Base.metadata, 'before_create', DDL("CREATE SCHEMA IF NOT EXISTS private"))

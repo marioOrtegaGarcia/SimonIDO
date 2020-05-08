@@ -3,7 +3,7 @@ from sqlalchemy import Column, Integer, Boolean, String
 from sqlalchemy.types import DateTime
 
 # Tasks table
-class Users(Base):
+class User(Base):
     __tablename__ = 'users'
     __table_args__ = { 'schema':'private' , 'extend_existing': True}
     id = Column(Integer, primary_key=True)
