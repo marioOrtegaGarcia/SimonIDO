@@ -3,5 +3,6 @@ __pycache__
 env/
 *.DS_Store
 *.swp
+*.swo
 *.pyc
 flask/project/templates/public/Untitled.html

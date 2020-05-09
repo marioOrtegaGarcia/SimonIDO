@@ -6,7 +6,7 @@ import os
 import datetime
 import hashlib as hash
 
-from flask import render_template, redirect, url_for, request, flash
+from flask import render_template, redirect, url_for, request
 from sqlalchemy.orm import sessionmaker
 from project import app
 from project import db_session
@@ -15,6 +15,7 @@ from project.models.List import List
 from project.models.Task import Task
 from project.forms.TaskForm import TaskForm
 from project.forms.UserForm import UserForm
+from project.forms.ListForm import ListForm
 
 @app.route("/")
 def index():
@@ -25,8 +26,10 @@ def index():
 def home():
     list = db_session.query(List).all()
     tasks = db_session.query(Task).all()
+    list_form = ListForm(request.form)
+    task_form = TaskForm(request.form)
     # tasks = Task.query.all()
-    return render_template("public/home.html", list=list, tasks=tasks)
+    return render_template("public/home.html", list=list, tasks=tasks, list_form=list_form, task_form=task_form)
 
 
 @app.route("/sign-up", methods=["POST", "GET"])
@@ -50,12 +53,17 @@ def signup():
     else:
         return render_template("public/sign_up.html")
 
-@app.route("/about")
-def about():
-    return "About"
+@app.route("/insert-list", methods = ['POST'])
+def insert_list():
+    form = ListForm(request.form)
+    if request.method == 'POST':
+        list = List(name = form.name.data)
+        db_session.add(list)
+        db_session.commit()
+    return redirect(url_for('home'))
 
 
-@app.route("/viewTasks")
+@app.route("/view-tasks")
 def view_tasks():
     list = db_session.query(List).all()
     print(list)
@@ -63,25 +71,9 @@ def view_tasks():
     form = TaskForm(request.form)
     return render_template("public/viewTasks.html", tasks=tasks, form=form)
 
-#Modal Edit Task
-@app.route('/update', methods = ['GET', 'POST'])
-def update():
-    form = TaskForm(request.form)
-    if request.method == 'POST':
-        task = db_session.query(Task).get(request.form.get('id'))
-        task.subject = form.subject.data
-        task.description = form.description.data
-        task.assigned_to = form.assigned_to.data
-        task.status = form.status.data
-        print(task)
-        db_session.add(task)
-        db_session.commit()
-        flash("Task Updated Successfully")
-        return redirect(url_for('view_tasks'))
-
 #Modal View Insert
-@app.route('/insert', methods = ['POST'])
-def insert():
+@app.route('/insert-task', methods = ['POST'])
+def insert_task():
     form = TaskForm(request.form)
     if request.method == 'POST':
         task = Task(
@@ -95,16 +87,29 @@ def insert():
         print(task)
         db_session.add(task)
         db_session.commit()
-        flash("Task Inserted Successfully")
-        return redirect(url_for('view_tasks'))
+        return redirect(url_for('home'))
+
+#Modal Edit Task
+@app.route('/update-task', methods = ['GET', 'POST'])
+def update_task():
+    form = TaskForm(request.form)
+    if request.method == 'POST':
+        task = db_session.query(Task).get(request.form.get('id'))
+        task.subject = form.subject.data
+        task.description = form.description.data
+        task.assigned_to = form.assigned_to.data
+        task.status = form.status.data
+        print(task)
+        db_session.add(task)
+        db_session.commit()
+        return redirect(url_for('home'))
 
 #Delete task
-@app.route('/delete/<id>/', methods=['GET', 'POST'])
-def delete(id):
+@app.route('/delete/task-<id>/', methods=['GET', 'POST'])
+def delete_task(id):
     data = db_session.query(Task).get(id)
     db_session.delete(data)
     db_session.commit()
-    flash("Task Deleted Successfully")
     return redirect(url_for('view_tasks'))
 
 
@@ -126,6 +131,9 @@ def createTask():
         db_session.commit()
         return redirect(url_for('createTask'))
 
+@app.route("/about")
+def about():
+    return "About"
 
 @app.route("/success/")
 def success():

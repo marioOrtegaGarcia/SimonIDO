@@ -9,8 +9,8 @@ from project.models.List import List
 class TaskForm(FlaskForm):
     id = HiddenField('id')
     subject = StringField('Subject', validators=[DataRequired()])
-    description = StringField('Description', validators=[DataRequired()])
+    description = StringField('Description')
     status = BooleanField('Completed', default=False)
-    assigned_to = StringField('Assign to', validators=[DataRequired()])
+    assigned_to = StringField('Assign to')
     list = QuerySelectField(query_factory=lambda: db_session.query(List).all(), allow_blank=False, get_label='name')
     submit = SubmitField('Submit')
