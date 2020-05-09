@@ -1,0 +1,47 @@
+
+
+.project-board {
+	display: grid;
+	grid-template-rows: 1fr;
+	grid-template-columns: repeat(auto-fit, 200px);
+	grid-gap: 10px;
+}
+
+.bin {
+	align-self: start;
+	background-color: #ebebf0; 
+	display: grid;
+	border-radius: 4px;
+}
+
+.bin-label {
+	font-weight: bolder;
+	position: relative;
+	left: 15px;
+}
+
+.card {
+	background-color: white;
+	background: white;
+	display: grid;
+	box-sizing: border-box;
+	margin: 6px;
+	border-radius: 4px;
+	padding: 5px;
+	
+}
+
+.card-label {
+	font-weight: bold;
+}
+
+.card-status {
+	font-size: 12px;
+	background-color: royalblue;
+	color: white;
+	border-radius: 4px;
+	padding: 2px 4px;
+	width: 50px;
+	text-align: center;
+}
+

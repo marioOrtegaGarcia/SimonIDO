@@ -15,7 +15,14 @@ class List(Base):
     tasks = relationship('Task', backref='private.lists', lazy=True)
 
     def add_task(self, subject, description, assigned_to, status):
-        t = Tasks(subject=subject, descripion=description, assigned_to=assigned_to, status=status, date_created=DateTime(), list_id=self.id)
+        t = Tasks(
+                subject=subject, 
+                descripion=description, 
+                assigned_to=assigned_to, 
+                status=status, 
+                date_created=DateTime(), 
+                list_id=self.id
+                )
         db.session.add(t)
         db.session.commit()
 

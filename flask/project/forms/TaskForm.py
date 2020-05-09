@@ -12,5 +12,5 @@ class TaskForm(FlaskForm):
     description = StringField('Description', validators=[DataRequired()])
     status = BooleanField('Completed', default=False)
     assigned_to = StringField('Assign to', validators=[DataRequired()])
-    list = QuerySelectField(query_factory=lambda: db_session.query(List).all())
+    list = QuerySelectField(query_factory=lambda: db_session.query(List).all(), allow_blank=False, get_label='name')
     submit = SubmitField('Submit')

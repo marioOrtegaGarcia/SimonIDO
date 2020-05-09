@@ -23,9 +23,10 @@ def index():
 
 @app.route("/home")
 def home():
+    list = db_session.query(List).all()
     tasks = db_session.query(Task).all()
     # tasks = Task.query.all()
-    return render_template("public/home.html", tasks=tasks)
+    return render_template("public/home.html", list=list, tasks=tasks)
 
 
 @app.route("/sign-up", methods=["POST", "GET"])

@@ -1,37 +1,26 @@
 {% extends "public/base.html" %}
 {% include "public/userNavigationBar.html" %}
 
-{% block title %} {{user}}'s Home Page{% endblock %}
+{% block link %} <link rel="stylesheet" href="{{url_for('static', filename='css/cards.css')}}"> {% endblock %}
+
+
+{% block title %} Simon's Home Page{% endblock %}
 
 {% block content %}
-	<h1>Hello {{user}}! Simon Says You should</h1>
+	<h1>Hello Simon! Simon Says You should</h1>
 
+	<div class="project-board">
 
-
-	<div class="container">
-		<table class="table table-hover table-dark">
-			<thead>
-				<tr>
-					<th scope="col">ID</th>
-					<th scope="col">Subject</th>
-					<th scope="col">Description</th>
-					<th scope="col">Assigned to</th>
-					<th scope="col">Status</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for task in tasks %}
-					<tr>
-						<th scope="row">{{ task.id }}</th>
-						<th scope="row">{{ task.subject }}</th>
-						<th scope="row">{{ task.description }}</th>
-						<th scope="row">{{ task.assigned_to }}</th>
-						<th scope="row">{{ task.status }}</th>
-					</tr>
+		{% for l in list %}
+			<div class="bin">
+				<div class="bin-label">{{ l.name }}</div>
+				{% for task in l.tasks %}
+					<div class="card">
+						<label class="card-label">{{task.subject}}</label>
+						<div class="card-status">{{task.status}}</div>
+					</div>
 				{% endfor %}
-			</tbody>
-		</table>
+			</div>	
+		{% endfor %}
 	</div>
-
-
 {% endblock %}
