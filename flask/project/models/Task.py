@@ -15,3 +15,6 @@ class Task(Base):
     date_created = Column(DateTime())
     list_id = Column(Integer, ForeignKey('private.lists.id'), nullable=False)
     list = relationship("List")
+    
+    def __repr__(self):
+        return repr("<ID: " + self.id + " Subject: " + self.subject + ">")

@@ -27,4 +27,4 @@ class List(Base):
         db.session.commit()
 
     def __repr__(self):
-        return repr(self.name)
+        return repr("<ID: " + str(self.id) + " Name: " + self.name + ">")

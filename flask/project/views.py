@@ -21,37 +21,12 @@ from project.forms.ListForm import ListForm
 def index():
     return render_template("public/index.html")
 
-
 @app.route("/home")
 def home():
     list = db_session.query(List).all()
-    tasks = db_session.query(Task).all()
     list_form = ListForm(request.form)
     task_form = TaskForm(request.form)
-    # tasks = Task.query.all()
-    return render_template("public/home.html", list=list, tasks=tasks, list_form=list_form, task_form=task_form)
-
-
-@app.route("/sign-up", methods=["POST", "GET"])
-def signup():
-    # TODO: Use B Crypt to safely store passwords
-    form = UserForm(request.form)
-    if not form.validate_on_submit():
-        return render_template('public/sign_up.html', form=form)
-    if request.method == "POST":
-        user = User(
-                username = form.username.data,
-                email = form.email.data,
-                password = form.password.data,
-                date_joined = datetime.datetime.now()
-                )
-        username = form.username.data
-        print(user)
-        db_session.add(user)
-        db_session.commit()
-        return redirect(url_for('home', user=username))
-    else:
-        return render_template("public/sign_up.html")
+    return render_template("public/home.html", list=list, list_form=list_form, task_form=task_form)
 
 @app.route("/insert-list", methods = ['POST'])
 def insert_list():
@@ -62,16 +37,6 @@ def insert_list():
         db_session.commit()
     return redirect(url_for('home'))
 
-
-@app.route("/view-tasks")
-def view_tasks():
-    list = db_session.query(List).all()
-    print(list)
-    tasks = db_session.query(Task).all()
-    form = TaskForm(request.form)
-    return render_template("public/viewTasks.html", tasks=tasks, form=form)
-
-#Modal View Insert
 @app.route('/insert-task', methods = ['POST'])
 def insert_task():
     form = TaskForm(request.form)
@@ -89,7 +54,6 @@ def insert_task():
         db_session.commit()
         return redirect(url_for('home'))
 
-#Modal Edit Task
 @app.route('/update-task', methods = ['GET', 'POST'])
 def update_task():
     form = TaskForm(request.form)
@@ -104,14 +68,12 @@ def update_task():
         db_session.commit()
         return redirect(url_for('home'))
 
-#Delete task
 @app.route('/delete/task-<id>/', methods=['GET', 'POST'])
 def delete_task(id):
     data = db_session.query(Task).get(id)
     db_session.delete(data)
     db_session.commit()
     return redirect(url_for('view_tasks'))
-
 
 @app.route('/createTask', methods=['GET', 'POST'])
 def createTask():
@@ -130,6 +92,34 @@ def createTask():
         db_session.add(task)
         db_session.commit()
         return redirect(url_for('createTask'))
+
+@app.route("/view-tasks")
+def view_tasks():
+    list = db_session.query(List).all()
+    print(list)
+    tasks = db_session.query(Task).order_by(Task.date_created.asc())
+    form = TaskForm(request.form)
+    return render_template("public/viewTasks.html", tasks=tasks, form=form)
+
+@app.route("/sign-up", methods=["POST", "GET"])
+def signup():
+    # TODO: Use B Crypt to safely store passwords
+    form = UserForm(request.form)
+    if not form.validate_on_submit():
+        return render_template('public/sign_up.html', form=form)
+    if request.method == "POST":
+        user = User(
+                username = form.username.data,
+                email = form.email.data,
+                password = form.password.data,
+                date_joined = datetime.datetime.now()
+                )
+        username = form.username.data
+        db_session.add(user)
+        db_session.commit()
+        return redirect(url_for('home', user=username))
+    else:
+        return render_template("public/sign_up.html")
 
 @app.route("/about")
 def about():

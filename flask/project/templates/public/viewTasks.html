@@ -45,12 +45,13 @@
 						<tbody>
 							{% for task in tasks %}
 								<tr>
-									<th scope="row">{{ task.list }}</th>
+									<th scope="row">{{ task.list.name }}</th>
 									<th scope="row">{{ task.id }}</th>
 									<th scope="row">{{ task.subject }}</th>
 									<th scope="row">{{ task.description }}</th>
 									<th scope="row">{{ task.assigned_to }}</th>
 									<th scope="row">{{ task.status }}</th>
+									<th scope="row">{{ task.date_created }}</th>
 									<td>
 										<a href="/update/{{task.id}}" class="btn btn-light btn-xs" data-toggle="modal" data-target="#modaledit{{task.id}}">Edit</a>
 										<a href="/delete/{{task.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Simon asks if you want to delete task: {{ task.subject }}?')">Delete</a>
@@ -66,7 +67,7 @@
 											</div>
 											<div class="modal-body">
 
-												<form action="{{url_for('update')}}" method="POST" class="form" role="form">
+												<form action="{{url_for('update_task')}}" method="POST" class="form" role="form">
 													{{ form.csrf_token() }}
 													<!-- {{ wtf.form_field(form.id, value=task.id) }} -->
 													<d1>
@@ -104,7 +105,7 @@
 
 							<!-- Task Form -->
 							<div class="modal-body">
-								<form action="{{url_for('insert')}}" method="POST" class="form" role="form">
+								<form action="{{url_for('insert_task')}}" method="POST" class="form" role="form">
 									{{ form.csrf_token() }}
 									<d1>
 									{{ wtf.form_field(form.list , placeholder='') }}
