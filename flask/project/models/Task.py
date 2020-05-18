@@ -17,4 +17,4 @@ class Task(Base):
     list = relationship("List")
     
     def __repr__(self):
-        return repr("<ID: " + self.id + " Subject: " + self.subject + ">")
+        return repr("<ID: " + str(self.id) + " Subject: " + self.subject + ">")

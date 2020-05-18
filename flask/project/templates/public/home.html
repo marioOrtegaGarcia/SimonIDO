@@ -1,26 +1,151 @@
 {% extends "public/base.html" %}
 {% include "public/userNavigationBar.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block link %} <link rel="stylesheet" href="{{url_for('static', filename='css/cards.css')}}"> {% endblock %}
-
 
 {% block title %} Simon's Home Page{% endblock %}
 
 {% block content %}
-	<h1>Hello Simon! Simon Says You should</h1>
 
-	<div class="project-board">
+	<!-- Dashboard View -->
+	<section class="dashboard">
 
 		{% for l in list %}
-			<div class="bin">
-				<div class="bin-label">{{ l.name }}</div>
-				{% for task in l.tasks %}
-					<div class="card">
-						<label class="card-label">{{task.subject}}</label>
-						<div class="card-status">{{task.status}}</div>
-					</div>
-				{% endfor %}
+			<div class="list">
+				<a style="text-decoration:none; color=Black;" href="/update-list/{{l.id}}" class="list-title" data-toggle="modal" data-target="#listmodal{{l.id}}">{{ l.name }}</a>
+
+				<!-- Modal Edit List -->
+				<div id="listmodal{{l.id}}" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Edit List</h4>
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							</div> <!-- modal-header -->
+
+							<!-- List Form -->
+							<div class="modal-body">
+								<form action="{{url_for('insert_list')}}" method="POST" class="form" role="form">
+									{{ list_form.csrf_token() }}
+									<d1>
+									{{ wtf.form_field(list_form.name,value=l.name) }}
+									</d1>
+									<p><input type=submit class="btn btn-primary mb-2"></p>
+								</form>
+							</div> <!-- List Form - modal-body -->
+
+							<div class="modal-footer">
+								<a href="/delete/list{{l.id}}" class="btn btn-danger btn-xs">Delete</a>
+							</div>
+
+						</div> <!-- modal-content -->
+					</div> <!-- modal-dialog -->
+				</div> <!-- Modal Edit List -->
+
+				<ul class="list-items">
+					{% for task in l.tasks | sort(attribute='date_created')%}
+						<li href="/update-task/{{task.id}}" class="card-label" data-toggle="modal" data-target="#taskmodal{{task.id}}">{{task.subject}}</li>
+
+						<!-- Modal Edit Task Data -->
+						<div id="taskmodal{{task.id}}" class="modal fade" role="dialog">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h4 class="modal-title"> Update Task </h4>
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+									</div>
+									<div class="modal-body">
+
+										<form action="{{url_for('update_task')}}" method="POST" class="form" role="form">
+											{{ task_form.csrf_token() }}
+											<d1>
+											<input type="hidden" name="id" value="{{task.id}}">
+											<input type="hidden" name="list" value="{{l.id}}">
+											{{ wtf.form_field(task_form.subject, value=task.subject) }}
+											{{ wtf.form_field(task_form.description, value=task.description) }}
+											{{ wtf.form_field(task_form.status, value=task.status) }}
+											{{ wtf.form_field(task_form.assigned_to, value=task.assigned_to) }}
+											</d1>
+											<button class="btn btn-primary" type="submit">Update</button>
+										</form>
+
+									</div> <!-- modal-body -->
+
+									<div class="modal-footer">
+										<a href="/delete/task{{task.id}}" class="btn btn-danger btn-xs">Delete</a>
+									</div>
+
+								</div> <!-- modal-content -->
+							</div> <!-- modal-dialog -->
+						</div> <!-- Modal Edit Task Data -->
+					{% endfor %}
+				</ul>
+				<button class="add-card-btn btn" data-toggle="modal" data-target="#taskmodal{{l.id}}">Add a task</button>
 			</div>	
+
+			<!-- Modal Add Task -->
+			<div id="taskmodal{{l.id}}" class="modal fade" role="dialog">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Add Task</h4>
+						</div> <!-- modal-header -->
+
+						<!-- Task Form -->
+						<div class="modal-body">
+							<form action="{{url_for('insert_task')}}" method="POST" class="form" role="form">
+								{{ task_form.csrf_token() }}
+								<d1>
+								<input type="hidden" name="list" value="{{l.id}}">
+								{{ wtf.form_field(task_form.subject, placeholder='Subject') }}
+								{{ wtf.form_field(task_form.description, placeholder='Description') }}
+								{{ wtf.form_field(task_form.status, placeholder='Status') }}
+								{{ wtf.form_field(task_form.assigned_to, placeholder='Owner') }}
+								</d1>
+								<p><input type=submit class="btn btn-primary mb-2"></p>
+							</form>
+						</div> <!-- Task Form - modal-body -->
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						</div>
+
+					</div> <!-- modal-content -->
+				</div> <!-- modal-dialog -->
+			</div> <!-- Modal Add Task -->
+
 		{% endfor %}
-	</div>
+
+		<button class="add-list-btn btn" data-toggle="modal" data-target="#listmodal">Add a list</button>
+
+		<!-- Modal Add List -->
+		<div id="listmodal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Add Task</h4>
+					</div> <!-- modal-header -->
+
+					<!-- List Form -->
+					<div class="modal-body">
+						<form action="{{url_for('insert_list')}}" method="POST" class="form" role="form">
+							{{ list_form.csrf_token() }}
+							<d1>
+							{{ wtf.form_field(list_form.name, placeholder='Name') }}
+							</d1>
+							<p><input type=submit class="btn btn-primary mb-2"></p>
+						</form>
+					</div> <!-- List Form - modal-body -->
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					</div>
+
+				</div> <!-- modal-content -->
+			</div> <!-- modal-dialog -->
+		</div> <!-- Modal Add List -->
+
+	</section>
+
 {% endblock %}

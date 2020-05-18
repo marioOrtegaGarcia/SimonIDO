@@ -53,8 +53,8 @@
 									<th scope="row">{{ task.status }}</th>
 									<th scope="row">{{ task.date_created }}</th>
 									<td>
-										<a href="/update/{{task.id}}" class="btn btn-light btn-xs" data-toggle="modal" data-target="#modaledit{{task.id}}">Edit</a>
-										<a href="/delete/{{task.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Simon asks if you want to delete task: {{ task.subject }}?')">Delete</a>
+										<a href="/update-task/{{task.id}}" class="btn btn-light btn-xs" data-toggle="modal" data-target="#modaledit{{task.id}}">Edit</a>
+										<a href="/delete/task{{task.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Simon asks if you want to delete task: {{ task.subject }}?')">Delete</a>
 									</td>
 								</tr>
 

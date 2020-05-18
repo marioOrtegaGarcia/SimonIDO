@@ -20,6 +20,7 @@ div.mastdiv .overlay {
 .features-icons {
 	padding-top: 7rem;
 	padding-bottom: 7rem;
+	min-height: calc(100vh - 34.5rem);
 }
 
 .features-icons .features-icons-item {
@@ -34,7 +35,6 @@ div.mastdiv .overlay {
 .features-icons .features-icons-item:hover .features-icons-icon i {
 	font-size: 5rem;
 }
-
 
 footer.footer {
 	padding-top: 4rem;

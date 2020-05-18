@@ -9,6 +9,7 @@ import hashlib as hash
 from flask import render_template, redirect, url_for, request
 from sqlalchemy.orm import sessionmaker
 from project import app
+from project import bs
 from project import db_session
 from project.models.User import User
 from project.models.List import List
@@ -54,6 +55,16 @@ def insert_task():
         db_session.commit()
         return redirect(url_for('home'))
 
+@app.route('/update-list', methods = ['GET', 'POST'])
+def update_list():
+    form = ListForm(request.form)
+    if request.method == 'POST':
+        list = db_session.query(List).get(request.form.get('id'))
+        list.name = form.name.data
+        db_session.add(task)
+        db_session.commit()
+    return redirect(url_for('home'))
+
 @app.route('/update-task', methods = ['GET', 'POST'])
 def update_task():
     form = TaskForm(request.form)
@@ -66,14 +77,27 @@ def update_task():
         print(task)
         db_session.add(task)
         db_session.commit()
-        return redirect(url_for('home'))
+    return redirect(url_for('home'))
 
-@app.route('/delete/task-<id>/', methods=['GET', 'POST'])
-def delete_task(id):
-    data = db_session.query(Task).get(id)
+@app.route('/delete/list<id>', methods=['GET', 'POST'])
+def delete_list(id):
+    data = db_session.query(List).get(id)
+    for task in data.tasks:
+        db_session.delete(task)
     db_session.delete(data)
     db_session.commit()
-    return redirect(url_for('view_tasks'))
+    return redirect(url_for('home'))
+
+@app.route('/delete/task<id>', methods=['GET', 'POST'])
+def delete_task(id):
+    print("Delete method called as get")
+    if request.method == 'POST':
+        print("Delete Task Post Method")
+    data = db_session.query(Task).get(id)
+    print("Deleting ", data)
+    db_session.delete(data)
+    db_session.commit()
+    return redirect(url_for('home'))
 
 @app.route('/createTask', methods=['GET', 'POST'])
 def createTask():
@@ -120,6 +144,14 @@ def signup():
         return redirect(url_for('home', user=username))
     else:
         return render_template("public/sign_up.html")
+
+@app.errorhandler(404) 
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
 
 @app.route("/about")
 def about():
